@@ -48,22 +48,33 @@ class UserInput extends StatefulWidget {
 
 class UserInputState extends State<UserInput> {
   String name = "";
+  final currencies = ["Dollars", "Euro", "Pounds"];
+  String _currency = "Dollars";
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       padding: EdgeInsets.only(left: 20.0, right: 20.0),
       child: Column(
         children: <Widget>[
           TextField(
-            decoration: InputDecoration(
-              hintText: "Insert your name here"
-            ),
+            decoration: InputDecoration(hintText: "Insert your name here"),
             onSubmitted: (String string) {
               setState(() {
                 name = string;
               });
             },
+          ),
+          DropdownButton(
+            items: ["Dollars", "Euro", "Pounds"].map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(
+                  value,
+                  textDirection: TextDirection.ltr,
+                ),
+              );
+            }).toList(),
+            onChanged: (String value) {},
           ),
           Text("Hello " + name)
         ],
