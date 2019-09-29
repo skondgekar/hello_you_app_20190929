@@ -56,12 +56,13 @@ class UserInputState extends State<UserInput> {
       child: Column(
         children: <Widget>[
           TextField(
-            onChanged: (String string) {
+            onSubmitted: (String string) {
               setState(() {
                 name = string;
               });
             },
-          )
+          ),
+          Text("Hello " + name)
         ],
       ),
     );
