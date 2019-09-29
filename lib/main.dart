@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(primarySwatch: Colors.purple),
+        theme: ThemeData(primarySwatch: Colors.green),
         title: appTitle,
         home: MyHomePage(title: appTitle));
   }
@@ -56,6 +56,9 @@ class UserInputState extends State<UserInput> {
       child: Column(
         children: <Widget>[
           TextField(
+            decoration: InputDecoration(
+              hintText: "Insert your name here"
+            ),
             onSubmitted: (String string) {
               setState(() {
                 name = string;
