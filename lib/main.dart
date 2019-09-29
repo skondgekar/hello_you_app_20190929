@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_you/data/currency_codes.dart' as currency_codes;
 
 void main() => runApp(MyApp());
 
@@ -7,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(primarySwatch: Colors.green),
+        theme: ThemeData(primarySwatch: Colors.indigo),
         title: appTitle,
         home: MyHomePage(title: appTitle));
   }
@@ -24,6 +25,7 @@ class MyHomePage extends StatelessWidget {
         title: Text(
           "Hello You App",
           textDirection: TextDirection.ltr,
+          style: TextStyle(color: Colors.white),
         ),
       ),
       body: HomePageContents(),
@@ -41,172 +43,105 @@ class HomePageContents extends StatelessWidget {
 class UserInput extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return UserInputState();
   }
 }
 
 class UserInputState extends State<UserInput> {
-  String name = "";
-  final currencies = [
-    "USD",
-    "CAD",
-    "EUR",
-    "AED",
-    "AFN",
-    "ALL",
-    "AMD",
-    "ARS",
-    "AUD",
-    "AZN",
-    "BAM",
-    "BDT",
-    "BGN",
-    "BHD",
-    "BIF",
-    "BND",
-    "BOB",
-    "BRL",
-    "BWP",
-    "BYR",
-    "BZD",
-    "CDF",
-    "CHF",
-    "CLP",
-    "CNY",
-    "COP",
-    "CRC",
-    "CVE",
-    "CZK",
-    "DJF",
-    "DKK",
-    "DOP",
-    "DZD",
-    "EEK",
-    "EGP",
-    "ERN",
-    "ETB",
-    "GBP",
-    "GEL",
-    "GHS",
-    "GNF",
-    "GTQ",
-    "HKD",
-    "HNL",
-    "HRK",
-    "HUF",
-    "IDR",
-    "ILS",
-    "INR",
-    "IQD",
-    "IRR",
-    "ISK",
-    "JMD",
-    "JOD",
-    "JPY",
-    "KES",
-    "KHR",
-    "KMF",
-    "KRW",
-    "KWD",
-    "KZT",
-    "LBP",
-    "LKR",
-    "LTL",
-    "LVL",
-    "LYD",
-    "MAD",
-    "MDL",
-    "MGA",
-    "MKD",
-    "MMK",
-    "MOP",
-    "MUR",
-    "MXN",
-    "MYR",
-    "MZN",
-    "NAD",
-    "NGN",
-    "NIO",
-    "NOK",
-    "NPR",
-    "NZD",
-    "OMR",
-    "PAB",
-    "PEN",
-    "PHP",
-    "PKR",
-    "PLN",
-    "PYG",
-    "QAR",
-    "RON",
-    "RSD",
-    "RUB",
-    "RWF",
-    "SAR",
-    "SDG",
-    "SEK",
-    "SGD",
-    "SOS",
-    "SYP",
-    "THB",
-    "TND",
-    "TOP",
-    "TRY",
-    "TTD",
-    "TWD",
-    "TZS",
-    "UAH",
-    "UGX",
-    "UYU",
-    "UZS",
-    "VEF",
-    "VND",
-    "XAF",
-    "XOF",
-    "YER",
-    "ZAR",
-    "ZMK"
-  ];
-  String _currency = "USD";
+  String result = "";
+  final currencies = currency_codes.currencies;
+  String _currency = "INR";
+
+  // Controllers
+  TextEditingController distanceController = TextEditingController();
+  TextEditingController milageController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
       child: Column(
         children: <Widget>[
-          TextField(
-            decoration: InputDecoration(
-              hintText: "Insert your name here",
-              labelStyle: Theme.of(context).textTheme.title,
-              labelText: "Name",
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0)),
-            ),
-            keyboardType: TextInputType.numberWithOptions(),
-            onSubmitted: (String string) {
-              setState(() {
-                name = string;
-              });
-            },
-          ),
-          DropdownButton(
-            items: currencies.map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(
-                  value,
-                  textDirection: TextDirection.ltr,
+          Padding(
+              padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+              child: TextField(
+                controller: distanceController,
+                decoration: InputDecoration(
+                  hintText: "e.g.  1234",
+                  labelStyle: Theme.of(context).textTheme.title,
+                  labelText: "Distance",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6.0)),
                 ),
-              );
-            }).toList(),
-            value: _currency,
-            onChanged: (String value) {
+                keyboardType: TextInputType.numberWithOptions(),
+              )),
+          Padding(
+              padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+              child: TextField(
+                controller: milageController,
+                decoration: InputDecoration(
+                  hintText: "e.g.  55",
+                  labelStyle: Theme.of(context).textTheme.title,
+                  labelText: "Distance per unit / Milage",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6.0)),
+                ),
+                keyboardType: TextInputType.numberWithOptions(),
+              )),
+          Row(
+            children: <Widget>[
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                      child: TextField(
+                        controller: priceController,
+                        decoration: InputDecoration(
+                          hintText: "e.g.  300",
+                          labelStyle: Theme.of(context).textTheme.title,
+                          labelText: "Price",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(6.0)),
+                        ),
+                        keyboardType: TextInputType.numberWithOptions(),
+                      ))),
+                      Container(width: 20.0,),
+              Expanded(
+                  child: DropdownButton(
+                items: currencies.map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(
+                      value,
+                      textDirection: TextDirection.ltr,
+                      textScaleFactor: 1.5,
+                    ),
+                  );
+                }).toList(),
+                value: _currency,
+                onChanged: (String value) {
+                  setState(() {
+                    _currency = value;
+                  });
+                },
+              )),
+            ],
+          ),
+          RaisedButton(
+            color: Theme.of(context).primaryColorDark,
+            textColor: Theme.of(context).primaryColorLight,
+            child: Text(
+              "Submit",
+              textDirection: TextDirection.rtl,
+              textScaleFactor: 1.5,
+            ),
+            onPressed: () {
               setState(() {
-                _currency = value;
+                result = distanceController.text;
               });
             },
           ),
-          Text("Hello " + name)
+          Text("Hello " + result)
         ],
       ),
     );
