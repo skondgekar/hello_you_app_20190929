@@ -172,15 +172,17 @@ class UserInputState extends State<UserInput> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 20.0, right: 20.0),
+      padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
       child: Column(
         children: <Widget>[
           TextField(
             decoration: InputDecoration(
               hintText: "Insert your name here",
               labelStyle: Theme.of(context).textTheme.title,
-              labelText: "Name"
+              labelText: "Name",
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.0)),
             ),
+            keyboardType: TextInputType.numberWithOptions(),
             onSubmitted: (String string) {
               setState(() {
                 name = string;
